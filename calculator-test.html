@@ -1,0 +1,413 @@
+<!Doctype html>
+<html>
+    <head>
+        <title>JavaScript Calculator</title>
+        <link rel="shortcut icon" href="/img/Calculator.png">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <style>
+        
+        * {
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+            }
+
+           html{
+                height: 100%;
+                margin: 0;
+            }
+            body{
+                height: 100%;
+                margin: 0;
+                background-attachment: fixed;
+                background: blue; /* For browsers that do not support gradients */
+                background: linear-gradient(to bottom right, #82C5F0 10%,#5D8AD5 40%,#5D8AD5 40% ,#C927EE 90%);
+                background-repeat: no-repeat;
+                font-family: 'Roboto', sans-serif;
+                overflow: hidden;
+            }
+            
+            .title{
+                position:absolute;
+                width: 100%;
+                left: 43%;
+                top: 0%;
+            }
+            .container {
+                width: 100%;
+                height: 100%;
+                margin-top: -40px;
+            }
+
+            form {
+                
+                width: 330px;
+                margin:auto;
+                margin-top: 200px;
+                margin-left: 820px;
+                min-height: 400px;
+                background:  linear-gradient(to bottom right, #82C5F0 10%,#5D8AD5 40%,#5D8AD5 40% ,#C927EE 90%);
+                -webkit-box-shadow: 3px 3px 60px rgba(0,0,0,0.5);  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+                -moz-box-shadow:    3px 3px 60px rgba(0,0,0,0.5);  /* Firefox 3.5 - 3.6 */
+                box-shadow:         3px 3px 60px rgba(0,0,0,0.5);  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+            }
+
+            .calc-screen {
+                background:none;
+                width: 100%;
+                height: 150px;
+                padding: 20px;
+                border-bottom: 1px solid #fff;
+            }
+
+            .calc-operation {
+                text-align: right;
+                color: #fff;
+                font-size: 21px;
+                padding-bottom: 10px;
+                border:none;
+            }
+            .operation{
+                background: transparent;
+                border: none;
+                width: 100%;
+                height: 100%;
+                font-size: 20px;
+                text-align: right;
+                color:  #fff;
+            }
+
+            .calc-typed {
+                margin-top: 20px;
+                
+            }
+            .calc-typed,input::placeholder{
+                color: white;
+            }
+            .display{
+                background: transparent;
+                border: none;
+                width: 100%;
+                height: 100%;
+                font-size: 45px;
+                text-align: right;
+                font-weight: 600;
+            }
+            .display,input::placeholder{
+                color: white;
+            }
+
+            .calc-button-row {
+                width: 100%;
+                background: none;
+            }
+
+            button {
+                width: 25%;
+                background:none;
+                color: #fff;
+                padding: 20px;
+                display: inline-block;
+                font-size: 33px;
+                text-align: center;
+                vertical-align: middle;
+                margin-right: -4px;
+                border: none;
+                border-right:solid 1px #fff;
+                border-bottom: solid 1px #fff;
+                transition: all 0.2s ease-in-out;
+                cursor: pointer;
+            }
+
+            button.b{
+                border-bottom: none;
+            }
+            button.top{
+                background: rgba(214, 234, 248,0.5);
+                
+            }
+            button.adjust{
+                margin-left: -1px;
+            }
+
+            
+            button.g{
+                color: #fff;
+                background: rgba(0,0,0,0.3); 
+                border-right: none;
+            }
+            button.corner{
+                background-color: #60C4DC;
+                border-right: none;
+                -webkit-border-radius: 0px 0px 5px 0px; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+                -moz-border-radius: 0px 0px 5px 0px; /* Firefox 3.5 - 3.6 */
+                border-radius: 0px 0px 5px 0px; /* top left, top right, bottom right, bottom left */
+                
+            }
+
+            button:hover {
+              
+            }
+
+            
+
+           
+            footer{
+                position: fixed;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                background: white;
+                color: black;
+                text-align: center;
+            }
+        
+        </style>
+    </head>
+    
+    <body>
+        <h1 class="title">JavaScript Calculator</h1>
+        <div class="container">
+          <form>
+            <div class="calc-screen">
+              <div class="calc-operation">
+                <input type="text" readonly class="operation" id="operation">
+              </div>
+                <div class="calc-typed">
+                    <input type="text" readonly class="display" name="display"  id="display" value="">
+                </div>
+            </div>
+            <div class="calc-button-row">
+              <button class="button top" onclick='clearscreen("")' type="button">AC</button>
+              <button class="button top" onclick='negation()' type="button">+/-</button>
+              <button class="button top adjust" onclick='percentage()'type="button" >%</button>
+              <button class="button g adjust" onclick='movement("÷")' type="button">&divide;</button>  
+            </div>
+            <div class="calc-button-row">
+              <button class="button c"  onclick='screen("7")' type="button">7</button>
+              <button class="button" onclick='screen("8")'type="button">8</button>
+              <button class="button adjust" value="9" onclick='screen("9")' type="button">9</button>
+              <button class="button g adjust" onclick='movement("×")' type="button">&times;</button>
+            </div>
+            <div class="calc-button-row">
+              <button class="button c" onclick='screen("4")' type="button">4</button>
+              <button class="button" onclick='screen("5")' type="button">5</button>
+              <button class="button adjust" onclick='screen("6")' type="button">6</button>
+                <button class="button g adjust" onclick='movement("-")' type="button">−</button>
+            </div>
+            <div class="calc-button-row">
+              <button class="button c"  onclick='screen("1")' type="button">1</button>
+              <button class="button"  onclick='screen("2")' type="button">2</button>
+              <button class="button adjust" value="3" onclick='screen("3")' type="button">3</button>
+              <button class="button g adjust" value="+" onclick='movement("+")' type="button">+</button>
+            </div>
+            <div class="calc-button-row">
+              <button class="button c b"  onclick='screen(".")' type="button">.</button>
+              <button class="button b"  onclick='screen("0")' type="button">0</button>
+              <button class="button b adjust" onclick='backspace()' type="button">del</button>
+              <button class="button b corner adjust"  onclick='movement("=")' type="button">=</button>
+              </div>
+            </form>
+          </div>
+          <footer>
+            <h4>By <a>Tsotne Gvadzabia</a></h4>
+            <h5>Design Inspired By <a>Jordan Symington</a></h5>
+          </footer>
+        
+        <script>
+            var box=document.getElementById("display");
+            var opdisplay=document.getElementById("operation");
+            var equaltruth;
+            var count;
+
+            function clearscreen(){
+              document.getElementById("display").value ="";
+              document.getElementById("operation").value="";
+              equaltruth=false;
+
+            }
+            function screen(val){
+              box.value += val;  
+            }
+
+            function movement(op){
+
+            // Idea one--- If statements with equals boolean var
+            //Idea two---- Move equal function into here and conduct if statements
+            //Bug--- Eval doesnt work with anything after an equal sign, maybe even just an equal sign
+            //Bug--- Equal with nothing in display == Undefined, change that with an if statement.
+            //Bug--- Pressin a number after calculation answer has been given just adds a number to the answer.
+            //Idea three--- Movement and Equal in the same function, equation is displayed in display until equal is pressed, thats when it moves up into the operation so the user sees the previous calculation.
+              var replacement = box.value;
+
+              if(op==="×"){
+                  if(box.value===""){
+                    opdisplay.value ="";
+                  }else{
+                        if(equaltruth==true){
+                            equaltruth = false;
+                            box.value="";
+                            if(count==2){
+                              opdisplay.value = " = "+ replacement + " "+ op + " "; 
+                            }else{
+                              opdisplay.value += " = "+ replacement + " "+ op + " "; 
+                            }
+                            var stringsearch = "=";
+                            var str = opdisplay.value;
+                            for(var i=count=0; i<str.length; count+=+(stringsearch===str[i++])){}
+                            console.log(count);
+
+                        }else{
+                            opdisplay.value += replacement +" "+ op +" ";
+                            replacement="";
+                            box.value="";
+                        }
+                  }
+              }
+              else if(op==="÷"){
+                      if(box.value===""){
+                      opdisplay.value ="";
+                  }else{
+                        if(equaltruth==true){
+                            equaltruth = false;
+                            box.value="";
+                            if(count==2){
+                              opdisplay.value = " = "+ replacement + " "+ op + " "; 
+                            }else{
+                              opdisplay.value += " = "+ replacement + " "+ op + " "; 
+                            }
+                            var stringsearch = "=";
+                            var str = opdisplay.value;
+                            for(var i=count=0; i<str.length; count+=+(stringsearch===str[i++])){}
+                            console.log(count);
+
+                        }else{
+                            opdisplay.value += replacement +" "+ op +" ";
+                            replacement="";
+                            box.value="";
+                        }
+                  }
+              }
+              else if(op==="+"){
+                     if(box.value===""){
+                     opdisplay.value ="";
+                  }else{
+                        if(equaltruth==true){
+                            equaltruth = false;
+                            box.value="";
+                            if(count==2){
+                              opdisplay.value = " = "+ replacement + " "+ op + " "; 
+                            }else{
+                              opdisplay.value += " = "+ replacement + " "+ op + " "; 
+                            }
+                            var stringsearch = "=";
+                            var str = opdisplay.value;
+                            for(var i=count=0; i<str.length; count+=+(stringsearch===str[i++])){}
+                            console.log(count);
+
+                        }else{
+                            opdisplay.value += replacement +" "+ op +" ";
+                            replacement="";
+                            box.value="";
+                        }
+                  }
+              }
+              else if(op==="-"){
+                 if(box.value===""){
+                     opdisplay.value ="";
+                  }else{
+                        if(equaltruth==true){
+                            equaltruth = false;
+                            box.value="";
+                            if(count==2){
+                              opdisplay.value = " = "+ replacement + " "+ op + " "; 
+                            }else{
+                              opdisplay.value += " = "+ replacement + " "+ op + " "; 
+                            }
+                            var stringsearch = "=";
+                            var str = opdisplay.value;
+                            for(var i=count=0; i<str.length; count+=+(stringsearch===str[i++])){}
+                            console.log(count);
+
+                        }else{
+                            opdisplay.value += replacement +" "+ op +" ";
+                            replacement="";
+                            box.value="";
+                        }
+                  }
+              }
+
+              else if(op==="="){
+                  if(box.value===""){
+                      box.value="0";
+                  }else{
+                      equaltruth=true;
+                      opdisplay.value += box.value;
+                      //Checking for Equal Sign
+                      var correction1 = opdisplay.value;
+                      correction1 = correction1.split("=").pop();
+                      //corrections below
+                      var correction2 = correction1.replace("×","*");       
+                      correction2 = correction2.replace("÷","/")
+                      //corrections finished
+                      x=correction2;
+                      x=eval(x);                //calculation of equation
+                      box.value=x;
+                      }
+              }else{
+                      if(box.value===""){
+                      opdisplay.value = "";
+                      }else{
+                      opdisplay.value += replacement +" "+ op +" " +" ";
+                      replacement="";
+                }
+              }
+            }
+
+            function backspace(){
+              var value = document.getElementById("display").value;
+                document.getElementById("display").value = value.substr(0, value.length - 1);
+            }
+            function percentage(){
+              var number = box.value;
+              number= number / 100;
+              box.value=number;
+            }
+            function negation(){
+
+              if(box.value===""){   //Number Absent
+                box.value="0";
+                console.log(box.value + " In Absent Number")
+              }else{  // Number Present
+
+                var checker = Math.sign(box.value);
+                console.log(checker +" Initial Checker");
+
+                if(checker=="1"){
+                  checker="-1";
+                  box.value=-Math.abs(box.value);
+                }
+                else if(box.value==="-0"){
+
+                  box.value="0";
+                  console.log(box.value +" Box Value in -0 Checker");
+                }
+                else if(checker=="0"){
+                  box.value="-0"
+                  console.log(box.value +" Box Value in 0 Checker");
+                }
+                else if(checker=="-1"){
+                  checker="1";
+                  box.value=Math.abs(box.value);
+                }
+                else{
+                  box.value="Error!";
+                }
+              } 
+            }
+        </script>
+    </body>
+
+</html>
