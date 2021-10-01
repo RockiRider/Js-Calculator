@@ -5,7 +5,7 @@ I wanted to use vanilla JS and CSS in order to complete the project.
 I also timed myself and it took me 18h to produce this repository.
 
 
-## The working final product of this project can be found [here](http://tsotnegvad.x10host.com/projects/calc/calcjs.html "Js Calculator Project")
+## The working final product of this project can be found [here](https://tsotne.co.uk/calculator "Js Calculator Project")
 
 ### The design I was trying (successfully I think) to mimick can be found [here](https://www.instagram.com/p/BflRpo0lm1o/?taken-by=ui.inspirations)
 
